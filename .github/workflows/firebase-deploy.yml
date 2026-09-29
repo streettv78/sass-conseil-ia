@@ -1,0 +1,18 @@
+name: Deploy Firebase All
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '18' }
+      - run: cd functions && npm ci
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only firestore:rules,functions,hosting --project sass-conseil-ia --force
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
