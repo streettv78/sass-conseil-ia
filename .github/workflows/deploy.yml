@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: '18'
       - run: cd functions && npm install
-      - name: Deploy Firebase
+      - name: Deploy Functions + Hosting SIREN 130179831
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions,hosting --project sass-conseil-ia --force
