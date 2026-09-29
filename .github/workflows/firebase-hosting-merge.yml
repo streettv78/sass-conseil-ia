@@ -1,16 +1,18 @@
-name: Deploy to Firebase Hosting on merge
+name: Deploy SASS Conseil SIREN 130179831
 on:
   push:
     branches: [ main ]
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci --prefix functions || npm install --prefix functions
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: actions/setup-node@v4
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}'
-          channelId: live
-          projectId: sass-conseil-ia
+          node-version: 20
+      - run: npm install -g firebase-tools
+      - run: npm ci --prefix functions || npm install --prefix functions
+      - run: firebase deploy --only hosting,firestore:rules --project sass-conseil-ia --non-interactive --token "${{ secrets.FIREBASE_TOKEN }}" || firebase deploy --only hosting --project sass-conseil-ia --non-interactive --force --json > /tmp/deploy.json
+        env:
+          FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}
