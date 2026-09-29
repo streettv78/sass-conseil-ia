@@ -8,10 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '18' }
+        with:
+          node-version: '18'
       - run: cd functions && npm install
-      - uses: w9jds/firebase-action@master
+      - name: Deploy ALL Firebase
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only firestore:rules,functions,hosting --project sass-conseil-ia --force
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}
+          
