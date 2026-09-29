@@ -1,15 +1,7 @@
-name: Deploy SASS Conseil SIREN 130179831
-on:
-  push:
-    branches: [ main ]
+name: DISABLED - ne plus utiliser
+on: workflow_dispatch
 jobs:
-  build_and_deploy:
+  noop:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}'
-          channelId: live
-          projectId: sass-conseil-ia
+      - run: echo "disabled"
