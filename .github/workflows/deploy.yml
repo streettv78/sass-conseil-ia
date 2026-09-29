@@ -11,9 +11,5 @@ jobs:
         with: { node-version: '18' }
       - name: Install deps
         run: cd functions && npm install
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only firestore:rules,functions,hosting --project sass-conseil-ia --force
-        env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SASS_CONSEIL_IA }}
+      - name: Deploy ALL
+        run: npx firebase-tools deploy --only firestore:rules,functions,hosting --project sass-conseil-ia --force --token ${{ secrets.FIREBASE_TOKEN }}
